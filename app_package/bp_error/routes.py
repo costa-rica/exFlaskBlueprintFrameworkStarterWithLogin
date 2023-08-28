@@ -17,7 +17,7 @@ logger_bp_error.setLevel(logging.DEBUG)
 
 
 #where do we store logging information
-file_handler = RotatingFileHandler(os.path.join(os.environ.get('WEB_ROOT'),"logs",'error_routes.log'), mode='a', maxBytes=5*1024*1024,backupCount=2)
+file_handler = RotatingFileHandler(os.path.join(os.environ.get('PROJECT_ROOT'),"logs",'error_routes.log'), mode='a', maxBytes=5*1024*1024,backupCount=2)
 file_handler.setFormatter(formatter)
 
 #where the stream_handler will print
@@ -31,7 +31,7 @@ logger_bp_error.addHandler(stream_handler)
 
 bp_error = Blueprint('bp_error', __name__)
 
-if os.environ.get('FLASK_ENV')=='prod':
+if os.environ.get('FLASK_CONFIG_TYPE')=='prod':
     @bp_error.app_errorhandler(400)
     def handle_400(err):
         logger_bp_error.info(f'@bp_error.app_errorhandler(400), err: {err}')

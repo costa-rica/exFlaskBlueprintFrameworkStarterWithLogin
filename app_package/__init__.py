@@ -12,8 +12,8 @@ from flask_mail import Mail
 import secure
 
 
-if not os.path.exists(os.path.join(os.environ.get('WEB_ROOT'),'logs')):
-    os.makedirs(os.path.join(os.environ.get('WEB_ROOT'), 'logs'))
+if not os.path.exists(os.path.join(os.environ.get('PROJECT_ROOT'),'logs')):
+    os.makedirs(os.path.join(os.environ.get('PROJECT_ROOT'), 'logs'))
 
 # timezone 
 def timetz(*args):
@@ -27,7 +27,7 @@ formatter_terminal = logging.Formatter('%(asctime)s:%(filename)s:%(name)s:%(mess
 logger_init = logging.getLogger('__init__')
 logger_init.setLevel(logging.DEBUG)
 
-file_handler = RotatingFileHandler(os.path.join(os.environ.get('WEB_ROOT'),'logs','__init__.log'), mode='a', maxBytes=5*1024*1024,backupCount=2)
+file_handler = RotatingFileHandler(os.path.join(os.environ.get('PROJECT_ROOT'),'logs','__init__.log'), mode='a', maxBytes=5*1024*1024,backupCount=2)
 file_handler.setFormatter(formatter)
 
 stream_handler = logging.StreamHandler()
@@ -44,7 +44,7 @@ logging.getLogger('werkzeug').addHandler(file_handler)
 logger_init.info(f'--- Starting Flask Starter---')
 TEMPORARILY_DOWN = "ACTIVE" if os.environ.get('TEMPORARILY_DOWN') == "1" else "inactive"
 logger_init.info(f"- TEMPORARILY_DOWN: {TEMPORARILY_DOWN}")
-logger_init.info(f"- FLASK_ENV: {os.environ.get('FLASK_ENV')}")
+logger_init.info(f"- FLASK_CONFIG_TYPE: {os.environ.get('FLASK_CONFIG_TYPE')}")
 
 mail = Mail()
 secure_headers = secure.Secure()
